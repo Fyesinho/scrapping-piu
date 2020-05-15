@@ -10,13 +10,19 @@ const callMain = async totalPages => {
     }
     const responses = await Promise.all(promises);
     responses.forEach(response => {
-       totalSongs.push(response.data.rows);
+        const filterRows = [];
+        const {rows} =response.data;
+        rows.map(song => {
+           if(song.inVersion) {
+               filterRows.push(song);
+           }
+        });
+        totalSongs.push(...filterRows);
     });
     return totalSongs;
 };
 
 callMain(8).then(response => {
-    console.log(response);
     fs.writeFile('./songs.json', JSON.stringify(response), function (error) {
         if (error) return console.log('Hubo un error, inténtalo nuevamente');
         console.log('Terminado correctamente');

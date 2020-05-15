@@ -64,7 +64,6 @@ const callMain = async totalPages => {
 };
 
 callMain(20).then(response => {
-    console.log(response);
     fs.writeFile('./songs.json', JSON.stringify(response), function (error) {
         if (error) return console.log('Hubo un error, inténtalo nuevamente');
         console.log('Terminado correctamente');
